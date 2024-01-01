@@ -3,7 +3,7 @@ from atexit import register
 from pathlib import Path
 from rich.console import Console
 
-GENERAL = "white"
+GENERAL = "b black"
 PROMPT = "b black"
 
 class ColorfulConsole(Console):
@@ -25,10 +25,9 @@ class Downloader:
     def run(self):
         self.menu()
             
-##    def menu(self, selectNum="0"):
-    def menu(self):
+    def menu(self, menuNum="0"):
         while self.running:
-            self.prompt(
+            menuNum = self.prompt(
                 "TikTokDownloader",
                 [
                 "Link",
@@ -37,14 +36,30 @@ class Downloader:
                 ],
                 self.console
                 )
-            
+            self.selectMenuNum(menuNum)
+            menuNum = "0"
+
     def prompt(self, title: str, contentList: list, console):
         printConsole = f"{title}\n"
         for i, j in enumerate(contentList):
             printConsole += f"{i + 1} {j}\n"
         return console.input(printConsole)
 
+    def selectMenuNum(self, menuNum: str):
+        if menuNum == "1":
+            self.link()
+        elif menuNum == "2":
+            self.login()
+        elif menuNum == "3":
+            self.quit()
 
+    def link(self):
+        self.console.print("link\n")
+    def login(self):
+        self.console.print("login\n")
+    def quit(self):
+        self.console.print("quit\n")
+    
 app = Flask(__name__)
 
 @app.route('/')
